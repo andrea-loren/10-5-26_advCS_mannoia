@@ -43,7 +43,8 @@ class Player: # class basically creates a "blueprint"
         if not self.inventory:
             print("(Empty)")
         else:
-            print(f"{index}. {item}")
+            for index, item in enumerate(self.inventory, start = 1):
+                print(f"{index}. {item}")
         # end of inventory checking conditional
     # end of showInventory function
 # end of Player class
@@ -52,9 +53,12 @@ class Player: # class basically creates a "blueprint"
 class Puzzle:
 
     # beginning of initialization function
-    def __init__(self, answer):
+    def __init__(self, question, answer, explanation):
         self.question = question
-        self.answer = answer.strip.lower()
+        if isinstance(answer, str):
+            self.answer = [answer.strip().lower()]
+        else:
+            self.answer = [a.strip().lower() for a in answer]
         self.explanation = explanation
     # end of initialization function
 # end of Puzzle class
@@ -78,7 +82,7 @@ class EscapeRoom:
 
     # beginning of checkTimeUp function
     def checkTimeUp(self):
-        return self.getTimeRemaining <= 0 # returns boolean value of whether it's true or false that getTimeRemaining is <= 0
+        return self.getTimeRemaining() <= 0 # returns boolean value of whether it's true or false that getTimeRemaining is <= 0
     # end of checkTimeUp function
 # end of EscapeRoom class
 
@@ -178,11 +182,11 @@ def playGame():
         while userAnswer == "":
 
             print("You must enter an answer!")
-            if game.checkTimeUp:
+            if game.checkTimeUp():
                 break
             userAnswer = input("Your answer: ").strip().lower()
         
-        if userAnswer == puzzle.answer:
+        if userAnswer in puzzle.answer:
 
             awardedKey = game.keysNeeded[stage_index]
             player.addKey(awardedKey)
@@ -197,7 +201,7 @@ def playGame():
             print(f"Game over, {player.name}!")
             return
 
-    if game.checkTimeUp:
+    if game.checkTimeUp():
         print("Time is up!")
         print(f"Game over, {player.name}!")
         return
@@ -207,7 +211,7 @@ def playGame():
     if hasGoldKey:
         print(f"Congratulations, {player.name}!")
         print("You insert the Gold Key into the final door and step out to freedom!")
-        print(f"Time remaining upon escape: {timeLeft / 60}m {timeLeft % 60}s")
+        print(f"Time remaining upon escape: {timeLeft // 60}m {timeLeft % 60}s")
 
 playGame()
 '''
