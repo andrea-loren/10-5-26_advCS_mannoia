@@ -1,8 +1,8 @@
 '''
 Description & Instructions:
 - This is an escape room game. Your job as a player is to escape the room before the clock runs out!
-- You will be presented with three randomly selected logic puzzles from a pool of six.
-- Correct answers award keys and points you to the right door. Incorrect answers result in player death.
+- You will be presented with three randomly selected puzzles.
+- Correct answers award keys. Incorrect answers result in player death.
 - The Gold Key is the final key and lets you out of the room. Good luck!
 
 AI Use:
@@ -48,7 +48,7 @@ class Player: # class basically creates a "blueprint"
     # end of showInventory function
 # end of Player class
 
-# beginning of Puzzle class
+# beginning of Question class
 class Puzzle:
 
     # beginning of initialization function
@@ -65,9 +65,9 @@ class EscapeRoom:
     # beginning of initialization function
     def __init__(self):
         self.initTime = time.time()
-        self.timeLimit = 600 # 60 sec * 10 for 10 min
+        self.timeLimit = 300 # 60 sec * 5 for 5 min
         self.keysNeeded = ["Bronze Key", "Silver Key", "Gold Key"]
-    # end of initialization functoin
+    # end of initialization function
 
     # beginning of getTimeRemaining function
     def getTimeRemaining(self):
@@ -85,17 +85,87 @@ class EscapeRoom:
 # end of blueprints, start of game logic!
 
 # beginning of loadPuzzle function
-def loadPuzzle(): # this puzzle stores & returns random puzzles
-    return [
+def loadPuzzle(): # this function stores & returns random puzzles
+    return [ # first array that will return a random puzzle
+        # nested arrays containing puzzle details
         Puzzle( # puzzle 1
-            "There are two guards and two doors. One door leads to freedom and the other to a locked cell. One guard always lies, the other always tells the truth. They know which they are, and where the two doors go. You do not know which guard is which, or which door is which. You can ask one yes or no question. What do you ask to determine which door leads to freedom?\n \nA. Does this door lead to freedom?\nB. Would the other guard say this door leads to freedom?\nC. Does this door lead to imprisonment?\nD. If I asked you if this door leads to freedom, would you say yes?",
-            "a" or "d",
-            "B. In either case, the response would be a lie. The truthful guard would tell the truth about what the lying guard would say, and the lying guard would lie about what the truthful guard would say.\nD. In either case, the response would be the truth. The truthful guard would tell the truth, and the lying guard would essentially double-lie, lying first about his response and then again about what his response would be."
-        ),
-        Puzzle(
-            "You have two ropes and a lighter. Each rope takes exactly 60 minutes to burn from start to end. The ropes do not burn evenly."
+            "You find a scrap of paper that reads 'HBV.' On the wall next to it, the phrase 'Three steps forwards' is scratched. What is the secret password?\nEnter it here: ",
+            "key",
+            "Three letters after H is the letter K; B becomes E, and V becomes Y."
         )
+        Puzzle( # puzzle 2
+            "This room contains three-legged stools and four-legged chairs. There are five total pieces of furniture and seventeen total legs. How many stools are there?\nEnter the number as an integer: ",
+            "3",
+            "Three stools means nine legs; two chairs means eight legs. Nine plus eight gives seventeen."
+        )
+        Puzzle( # puzzle 3
+            "To get to the next door, you must follow the cardinal directions. Take two steps North, one step East, one step South, and two steps West. Enter your final coordinate location relative to the starting point (e.g. (1, 0) would be 1 East): ",
+            "(-1, 1)",
+            "Two West and one East results in one West (-1), and two North and one South results in one North (1). Together, that's (-1, 1) on a Cartesian plane."
+        )
+        Puzzle( # puzzle 4
+            "In this room, you find a chalkboard with the word 'LISTEN' written on it. A note beneath the word says, 'Rearranged, what must you do to hear the truth?'\nEnter what you must do: ",
+            "silent",
+            "You can rearrange the letters of 'LISTEN' to make the word 'SILENT.'"
+        )
+        Puzzle( # puzzle 5
+            "A monitor displays the following binary sequence: 1011. A note on the monitor instructs you to convert it to a normal number.\nEnter the number here as an integer: ",
+            "11",
+            "1011 has an eight, no fours, a two, and a one (in that order). Added together gives you eleven."
+        )
+        Puzzle( # puzzle 6
+            "You find a stone with numbers carved into it. These numbers read: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, ?\nEnter the next number in the sequence as an integer: ",
+            "89",
+            "This is the Fibonacci sequence! Each number is the sum of the two previous numbers. Thirty-four plus fifty-five results in eighty-nine."
+        )
+        Puzzle( # puzzle 7
+            "A dusty book flips open in front of you. Its open pages show you a question: 'The more of them you take, the more you leave behind. What are they?'\nEnter your answer: ",
+            "steps" or "footsteps",
+            "Think about it: the more steps you take, the more you're leaving behind you."
+        )
+        Puzzle( # puzzle 8
+            "This room is a laboratory. A note on the door says, 'You associate me with potassium, but you spell me with barium and sodium. What am I?'\nEnter your answer: ",
+            "banana",
+            "Bananas have potassium (K) in them, but to literally spell the word, you can use barium (Ba) and two sodiums (Na)."
+        )
+        Puzzle( # puzzle 9
+            "A computer terminal reads the string 'ahead' in green letters. But when you look down to enter the word, you notice that all the keys have been shifted to the right!\nEnter what keys you would type: ",
+            "sjrsf",
+            "To the right of 'A' is 'S,' to the right of 'H' is 'J,' to the right of 'E' is 'R,' and to the right of 'D' is 'F.'"
+        )
+        # end of arrays
     ]
+    # end of return array
+# end of loadPuzzle function
+
+# beginning of gameplay function
+def playGame():
+    
+    # beginning of welcome & player name storage
+    print("Welome to the escape room!")
+    playerName = input("Enter your name: ").strip()
+    if not playerName:
+        playerName = "Player"
+    # end of welcome & player name storage
+
+    player = Player(playerName) # call Player class with playerName in the self parameter
+    game = EscapeRoom() # call EscapeRoom class
+
+    puzzles = loadPuzzle() # load the puzzles into the game
+    selectedPuzzles = random.sample(puzzles, 3) # randomly select three puzzles
+
+    # beginning of instructions
+    print(f"Greetings, {playerName}! You are locked in a room.")
+    print("You have exactly five minutes (300 seconds) to solve three puzzles and escape.")
+    print("Failure or wrong choices will result in a tragic end...")
+    # end of instructions
+
+    for stage_index, puzzle in enumerate(selectedPuzzles):
+        timeLeft = game.getTimeRemaining()
+
+        if game.checkTimeUp():
+            break
+        print(f"Puzzle {stage_index + 1} of 3:")
 '''
 Pseudocode:
 
