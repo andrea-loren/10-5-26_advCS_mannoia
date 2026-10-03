@@ -92,42 +92,42 @@ def loadPuzzle(): # this function stores & returns random puzzles
             "You find a scrap of paper that reads 'HBV.' On the wall next to it, the phrase 'Three steps forwards' is scratched. What is the secret password?",
             "key",
             "Three letters after H is the letter K; B becomes E, and V becomes Y."
-        )
+        ),
         Puzzle( # puzzle 2
             "This room contains three-legged stools and four-legged chairs. There are five total pieces of furniture and seventeen total legs. How many stools are there? Enter the number as an integer.",
             "3",
             "Three stools means nine legs; two chairs means eight legs. Nine plus eight gives seventeen."
-        )
+        ),
         Puzzle( # puzzle 3
             "To get to the next door, you must follow the cardinal directions. Take two steps North, one step East, one step South, and two steps West. Enter your final coordinate location relative to the starting point (e.g. (1, 0) would be 1 East).",
             "(-1, 1)",
             "Two West and one East results in one West (-1), and two North and one South results in one North (1). Together, that's (-1, 1) on a Cartesian plane."
-        )
+        ),
         Puzzle( # puzzle 4
             "In this room, you find a chalkboard with the word 'LISTEN' written on it. A note beneath the word says, 'Rearranged, what must you do to hear the truth?'",
             "silent",
             "You can rearrange the letters of 'LISTEN' to make the word 'SILENT.'"
-        )
+        ),
         Puzzle( # puzzle 5
             "A monitor displays the following binary sequence: 1011. A note on the monitor instructs you to convert it to a normal number. Enter the number as an integer",
             "11",
             "1011 has an eight, no fours, a two, and a one (in that order). Added together gives you eleven."
-        )
+        ),
         Puzzle( # puzzle 6
             "You find a stone with numbers carved into it. These numbers read: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, ? Enter the next number in the sequence as an integer.",
             "89",
             "This is the Fibonacci sequence! Each number is the sum of the two previous numbers. Thirty-four plus fifty-five results in eighty-nine."
-        )
+        ),
         Puzzle( # puzzle 7
             "A dusty book flips open in front of you. Its open pages show you a question: 'The more of them you take, the more you leave behind. What are they?'",
             ["steps", "footsteps"],
             "Think about it: the more steps you take, the more you're leaving behind you."
-        )
+        ),
         Puzzle( # puzzle 8
             "This room is a laboratory. A note on the door says, 'You associate me with potassium, but you spell me with barium and sodium. What am I?",
             "banana",
             "Bananas have potassium (K) in them, but to literally spell the word, you can use barium (Ba) and two sodiums (Na)."
-        )
+        ),
         Puzzle( # puzzle 9
             "A computer terminal reads the string 'ahead' in green letters. But when you look down to enter the word, you notice that all the keys have been shifted to the right! What keys would you type?",
             "sjrsf",
