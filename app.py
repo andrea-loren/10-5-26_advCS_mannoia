@@ -161,6 +161,7 @@ def playGame():
     # end of instructions
 
     for stage_index, puzzle in enumerate(selectedPuzzles):
+        
         timeLeft = game.getTimeRemaining()
 
         if game.checkTimeUp():
