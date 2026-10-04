@@ -7,7 +7,8 @@ Description & Instructions:
 
 AI Use:
 - I used AI the same way as I did in the last program where my code broke :(
-- AI was helpful in explaining 
+- AI was helpful in explaining code concepts I didn't understand
+- I also used it for debugging
 
 Technical Risk:
 - I found some extra time this weekend to incorporate some of the technical risks I had in my last program.
@@ -201,8 +202,8 @@ def playGame():
 
             # print stuff that the player will see
             print("Correct! Here is the explanation behind your logic:")
-            print(puzzle.explanation)
-            print(f"You retreived the {awardedKey}")
+            print(f"{puzzle.explanation}\n")
+            print(f"You retreived the {awardedKey}\n")
             player.showInventory() # call showInventory function
             # end of printing
 
