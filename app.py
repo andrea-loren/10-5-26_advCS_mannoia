@@ -13,8 +13,6 @@ Technical Risk:
 - I found some extra time this weekend to incorporate some of the technical risks I had in my last program.
 - These include the "class" function, object-oriented programming, "for" loops, arrays, functions, and libraries.
 - I also included the "enumerate" and "any" functions.
-
-Notes
 '''
 
 # importing time & random libraries necessary to play escape room
@@ -27,7 +25,7 @@ class Player: # class basically creates a "blueprint"
     # beginning of initialization function
     def __init__(self, name):
         self.name = name
-        self.inventory = [] # player starts with an empty inventory
+        self.inventory = [] # player starts with an empty inventory (array)
     # end of initialization function
 
     # beginning of addKey function
@@ -92,6 +90,7 @@ class EscapeRoom:
 def loadPuzzle(): # this function stores & returns random puzzles
     return [ # first array that will return a random puzzle
         # nested arrays containing puzzle details
+        # puzzle format: question, answer, explanation
         Puzzle( # puzzle 1
             "You find a scrap of paper that reads 'HBV.' On the wall next to it, the phrase 'Three steps forwards' is scratched. What is the secret password?",
             "key",
@@ -124,7 +123,7 @@ def loadPuzzle(): # this function stores & returns random puzzles
         ),
         Puzzle( # puzzle 7
             "A dusty book flips open in front of you. Its open pages show you a question: 'The more of them you take, the more you leave behind. What are they?'",
-            ["steps", "footsteps"],
+            ["steps", "footsteps"], # user can enter either
             "Think about it: the more steps you take, the more you're leaving behind you."
         ),
         Puzzle( # puzzle 8
@@ -148,8 +147,8 @@ def playGame():
     # beginning of welcome & player name storage
     print("Welome to the escape room!")
     playerName = input("Enter your name: ").strip()
+    # conditional checking if player enters a username
     if not playerName:
-
         playerName = "Player"
     # end of welcome & player name storage
 
@@ -162,58 +161,82 @@ def playGame():
     # beginning of instructions
     print(f"Greetings, {playerName}! You are locked in a room.")
     print("You have exactly five minutes (300 seconds) to solve three puzzles and escape.")
-    print("Failure or wrong choices will result in a tragic end...")
+    print("Failure or wrong choices will result in a tragic end...\n")
     # end of instructions
 
+    # for loop! stage_index is a variable created by "enumerate," which returns both the number and the value in a for loop
     for stage_index, puzzle in enumerate(selectedPuzzles):
-
+        
+        # declare new variable to calculate time remaining
         timeLeft = game.getTimeRemaining()
 
+        # beginning of conditional
         if game.checkTimeUp():
-
             break
+        # end of conditional
 
-        print(f"Puzzle {stage_index + 1} of 3:")
-        print(f"Time remaining: {timeLeft // 60}m {timeLeft % 60}s")
+        # beginning of puzzle-specific instructions
+        print(f"Puzzle {stage_index + 1} of 3:") # add one to stage_index since it starts at zero
+        print(f"Time remaining: {timeLeft // 60}m {timeLeft % 60}s") # use the remainder function to calculate seconds, and the fancy division to truncate for minutes
         print(f"Challenge: {puzzle.question}")
+        # end of puzzle-specific instructions
 
+        # get user input for answer
         userAnswer = input("Your answer: ").strip().lower()
 
-        while userAnswer == "":
-
+        # beginning of while loop
+        while userAnswer == "": # force the user to enter an answer
             print("You must enter an answer!")
             if game.checkTimeUp():
                 break
             userAnswer = input("Your answer: ").strip().lower()
+        # end of while loop
         
-        if userAnswer in puzzle.answer:
+        # check if the user's answer is in the puzzle's answer
+        if userAnswer in puzzle.answer: # "in" checks if the user's answer is contained in the puzzle's string
+            # this chunk of code won't show to the user
+            awardedKey = game.keysNeeded[stage_index] # determine which key the user got according to for loop
+            player.addKey(awardedKey) # add key to the player's inventory
+            # end of code chunk
 
-            awardedKey = game.keysNeeded[stage_index]
-            player.addKey(awardedKey)
-
+            # print stuff that the player will see
             print("Correct! Here is the explanation behind your logic:")
             print(puzzle.explanation)
             print(f"You retreived the {awardedKey}")
-            player.showInventory()
+            player.showInventory() # call showInventory function
+            # end of printing
 
         else:
+            # stop the game and inform the player
             print("Incorrect!")
             print(f"Game over, {player.name}!")
-            return
+            return # return blank to the loop
+            # end of code chunk
+        # end of conditional
 
+    # check if time is up
     if game.checkTimeUp():
+        # stop the game and inform the player
         print("Time is up!")
         print(f"Game over, {player.name}!")
-        return
+        return # return blank to the loop
+        # end of code chunk
+    # end of conditional
 
-    hasGoldKey = any(key == "Gold Key" for key in player.inventory)
+    hasGoldKey = any(key == "Gold Key" for key in player.inventory) # use "any" function to check if any of the keys in the player's inventory is gold
 
+    # check if the player has the gold key
     if hasGoldKey:
+        # tell the user they won
         print(f"Congratulations, {player.name}!")
         print("You insert the Gold Key into the final door and step out to freedom!")
         print(f"Time remaining upon escape: {timeLeft // 60}m {timeLeft % 60}s")
+        # end of code chunk
+    # end of condidtional
+# end of function
 
-playGame()
+playGame() # call the playGame function
+
 '''
 Pseudocode:
 
