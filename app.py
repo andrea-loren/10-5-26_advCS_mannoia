@@ -113,7 +113,7 @@ def loadPuzzle(): # this function stores & returns random puzzles
             "You can rearrange the letters of 'LISTEN' to make the word 'SILENT.'"
         ),
         Puzzle( # puzzle 5
-            "A monitor displays the following binary sequence: 1011. A note on the monitor instructs you to convert it to a normal number. Enter the number as an integer",
+            "A monitor displays the following binary sequence: 1011. A note on the monitor instructs you to convert it to a normal number. Enter the number as an integer.",
             "11",
             "1011 has an eight, no fours, a two, and a one (in that order). Added together gives you eleven."
         ),
@@ -205,6 +205,7 @@ def playGame():
             print(f"{puzzle.explanation}\n")
             print(f"You retreived the {awardedKey}\n")
             player.showInventory() # call showInventory function
+            print("")
             # end of printing
 
         else:
